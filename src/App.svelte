@@ -8,10 +8,19 @@
   .form > * {
     margin-bottom: 24px;
   }
+
+  .table-wrapper {
+    margin-top: 24px;
+  }
+
+  .table {
+    margin-bottom: 24px;
+  }
 </style>
 
 <script>
   import axios from "axios";
+  import { onMount } from "svelte";
 
   import Button from "./components/Button.svelte";
   import Section from "./components/Section.svelte";
@@ -21,11 +30,14 @@
   import short from "./data/short.json";
 
   let numberOfPairs = 2;
+  let copyTimeout;
 
   let dices = [];
   let words = [];
 
-  function generatePassword(e) {
+  const supportClipboard = Boolean(window.navigator.clipboard);
+
+  function generatePassword() {
     dices = Array.from({ length: numberOfPairs * 2 }, (_, index) => {
       return index % 2 === 0 ? getRandom(4) : getRandom(5);
     });
@@ -34,9 +46,29 @@
       return index % 2 === 0 ? short[dice] : long[dice];
     });
   }
+
+  onMount(() => {
+    generatePassword();
+  });
+
+  function onSubmit(e) {
+    e.preventDefault();
+    generatePassword();
+  }
+
+  function copyToClipboard(e) {
+    e.preventDefault();
+    clearTimeout(copyTimeout);
+    navigator.clipboard.writeText(words.join(" ")).then(() => {
+      e.target.innerText = "Copied!!";
+      copyTimeout = setTimeout(() => {
+        e.target.innerText = "Copy";
+      }, 1500);
+    });
+  }
 </script>
 
-<main class="main-content">
+<main>
   <Section class="with-title">
     <h3 class="title">Generate password</h3>
 
@@ -63,40 +95,43 @@
       </li>
     </ul>
 
-    <div class="form">
+    <form class="form" on:submit="{onSubmit}">
       <div class="nes-field">
-        <label for="number-of-paris">Gernate number of pairs words</label>
+        <label for="number-of-paris">number of pair words in password</label>
         <input
           class="nes-input {$$props.class}"
           id="number-of-pairs"
+          type="number"
           bind:value="{numberOfPairs}"
         />
       </div>
 
-      {#if dices.length > 0 && words.length > 0}
-        <div class="nes-table-responsive">
-          <table class="nes-table is-bordered is-centered">
-            <thead>
-              <tr>
-                {#each dices as dice}
-                  <th>{dice}</th>
-                {/each}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {#each words as word}
-                  <td>{word}</td>
-                {/each}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      {/if}
-    </div>
+      <Button type="submit">Generate Password</Button>
+    </form>
 
-    <Button type="button" handleClick="{generatePassword}">
-      Generate Password
-    </Button>
+    {#if dices.length > 0 && words.length > 0}
+      <div class="nes-table-responsive table-wrapper">
+        <table class="nes-table is-bordered is-centered table">
+          <thead>
+            <tr>
+              {#each dices as dice}
+                <th>{dice}</th>
+              {/each}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {#each words as word}
+                <td>{word}</td>
+              {/each}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {#if supportClipboard}
+        <Button type="type" handleClick="{copyToClipboard}">Copy</Button>
+      {/if}
+    {/if}
   </Section>
 </main>
