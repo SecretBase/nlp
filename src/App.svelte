@@ -16,11 +16,16 @@
   .table {
     margin-bottom: 24px;
   }
+
+  .table:before {
+    content: none;
+  }
 </style>
 
 <script>
   import axios from "axios";
   import { onMount } from "svelte";
+  import classnames from "classnames";
 
   import Button from "./components/Button.svelte";
   import Section from "./components/Section.svelte";
@@ -34,6 +39,7 @@
 
   let dices = [];
   let words = [];
+  let darkMode = "";
 
   const supportClipboard = Boolean(window.navigator.clipboard);
 
@@ -47,8 +53,20 @@
     });
   }
 
+  function setDarkMode(isDarkMode) {
+    darkMode = isDarkMode.matches ? "is-dark" : "";
+  }
+
   onMount(() => {
     generatePassword();
+    const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+    setDarkMode(isDarkMode);
+
+    isDarkMode.addListener(setDarkMode);
+
+    return () => {
+      isDarkMode.removeListener(setDarkMode);
+    };
   });
 
   function onSubmit(e) {
@@ -69,7 +87,7 @@
 </script>
 
 <main>
-  <Section class="with-title">
+  <Section class="{classnames('with-title', darkMode)}">
     <h3 class="title">Generate password</h3>
 
     <p>Long and short lists used:</p>
@@ -99,19 +117,18 @@
       <div class="nes-field">
         <label for="number-of-paris">number of pair words in password</label>
         <input
-          class="nes-input {$$props.class}"
+          class="{classnames('nes-input', darkMode)}"
           id="number-of-pairs"
-          type="number"
           bind:value="{numberOfPairs}"
         />
       </div>
 
-      <Button type="submit">Generate Password</Button>
+      <Button type="submit" handleClick="{onSubmit}">Generate Password</Button>
     </form>
 
     {#if dices.length > 0 && words.length > 0}
       <div class="nes-table-responsive table-wrapper">
-        <table class="nes-table is-bordered is-centered table">
+        <table class="nes-table is-bordered is-centered table {darkMode}">
           <thead>
             <tr>
               {#each dices as dice}

@@ -6,6 +6,6 @@
   const classname = classnames("nes-btn", variant);
 </script>
 
-<button class="{classname}" on:click="{handleClick}">
+<button class="{classname}" on:click="{handleClick}" {...$$restProps}>
   <slot />
 </button>
