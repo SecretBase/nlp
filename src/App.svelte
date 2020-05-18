@@ -128,7 +128,10 @@
           </tbody>
         </table>
       </div>
-
+      <p>
+        <span class="nes-icon is-small star"></span>
+        <strong>space will be inserted between words</strong>
+      </p>
       {#if supportClipboard}
         <Button type="type" handleClick="{copyToClipboard}">Copy</Button>
       {/if}
