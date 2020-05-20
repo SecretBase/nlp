@@ -30,15 +30,15 @@
   import { getRandom } from "./utils/range";
   import { classnames } from "./utils/classnames";
 
-  import long from "./data/long.json";
-  import short from "./data/short.json";
-
   let numberOfPairs = 2;
   let copyTimeout;
 
   let dices = [];
   let words = [];
   let darkMode = "";
+  let loading = true;
+  let short = {};
+  let long = {};
 
   const supportClipboard = Boolean(window.navigator.clipboard);
 
@@ -56,7 +56,16 @@
     darkMode = isDarkMode.matches ? "is-dark" : "";
   }
 
-  onMount(() => {
+  onMount(async () => {
+    const [longRes, shortRes] = await Promise.all([
+      fetch("/data/long.json").then(res => res.json()),
+      fetch("/data/short.json").then(res => res.json())
+    ]);
+
+    long = longRes;
+    short = shortRes;
+    loading = false;
+
     generatePassword();
     const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
     setDarkMode(isDarkMode);
@@ -111,21 +120,25 @@
         </a>
       </li>
     </ul>
+    {#if loading}
+      <h4>Loading...</h4>
+    {/if}
+    {#if dices.length > 0 && words.length > 0 && !loading}
+      <form class="form" on:submit="{onSubmit}">
+        <div class="nes-field">
+          <label for="number-of-paris">number of pair words in password</label>
+          <input
+            class="{classnames('nes-input', darkMode)}"
+            id="number-of-pairs"
+            bind:value="{numberOfPairs}"
+          />
+        </div>
 
-    <form class="form" on:submit="{onSubmit}">
-      <div class="nes-field">
-        <label for="number-of-paris">number of pair words in password</label>
-        <input
-          class="{classnames('nes-input', darkMode)}"
-          id="number-of-pairs"
-          bind:value="{numberOfPairs}"
-        />
-      </div>
+        <Button type="submit" handleClick="{onSubmit}">
+          Generate Password
+        </Button>
+      </form>
 
-      <Button type="submit" handleClick="{onSubmit}">Generate Password</Button>
-    </form>
-
-    {#if dices.length > 0 && words.length > 0}
       <div class="nes-table-responsive table-wrapper">
         <table class="nes-table is-bordered is-centered table {darkMode}">
           <thead>
