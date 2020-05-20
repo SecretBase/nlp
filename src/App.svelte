@@ -23,13 +23,12 @@
 </style>
 
 <script>
-  import axios from "axios";
   import { onMount } from "svelte";
-  import classnames from "classnames";
 
   import Button from "./components/Button.svelte";
   import Section from "./components/Section.svelte";
   import { getRandom } from "./utils/range";
+  import { classnames } from "./utils/classnames";
 
   import long from "./data/long.json";
   import short from "./data/short.json";

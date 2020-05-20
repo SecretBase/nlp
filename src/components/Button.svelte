@@ -1,5 +1,5 @@
 <script>
-  import classnames from "classnames";
+  import { classnames } from "../utils/classnames";
   export let variant = "is-primary";
   export let handleClick;
 
