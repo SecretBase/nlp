@@ -126,12 +126,17 @@
     {#if dices.length > 0 && words.length > 0 && !loading}
       <form class="form" on:submit="{onSubmit}">
         <div class="nes-field">
-          <label for="number-of-paris">number of pair words in password</label>
+          <label for="pairs">number of pair words in password</label>
           <input
             class="{classnames('nes-input', darkMode)}"
-            id="number-of-pairs"
+            name="number-of-pairs"
+            id="pairs"
+            type="number"
+            min="1"
+            max="10"
             bind:value="{numberOfPairs}"
           />
+
         </div>
 
         <Button type="submit" handleClick="{onSubmit}">
