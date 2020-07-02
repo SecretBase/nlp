@@ -1105,10 +1105,10 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
-sirv-cli@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/sirv-cli/-/sirv-cli-1.0.0.tgz#3456aee9159d39fa8c9868eab3a308a3538414e0"
-  integrity sha512-84PvgoXKbUmyO3i4kHFSrXuerD2iGIcewBgdmghwjeK1nRACJ8gG/vOH1qZdBDJMZGBC8miHs7erNFwv0mXE1A==
+sirv-cli@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/sirv-cli/-/sirv-cli-1.0.3.tgz#33789a8f9d6dcee2aca2e35c3c97051b462ca00f"
+  integrity sha512-pLWMreVMKvK/7Zwdi/8AMjVPaOhkW24a6GRsXtLbvgvbZNHjAb0J8vs3x86ES5radO06AxGRVp8oMWbuf+ExTw==
   dependencies:
     console-clear "^1.1.0"
     get-port "^3.2.0"
@@ -1116,13 +1116,13 @@ sirv-cli@1.0.0:
     local-access "^1.0.1"
     sade "^1.6.0"
     semiver "^1.0.0"
-    sirv "^1.0.0"
+    sirv "^1.0.1"
     tinydate "^1.0.0"
 
-sirv@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/sirv/-/sirv-1.0.0.tgz#c55fb4dd47760c95608f5fef10760ddbfc3fe209"
-  integrity sha512-NYxkb52SaeZWHH4cKwmY5N+Qv/oAVZHOUNuV+N7ohuJrlEYyQ0NdnR9s6+Ki2UFfYE4hjThzDCG9oU/qSNRdYA==
+sirv@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/sirv/-/sirv-1.0.1.tgz#db8272c8940289c594e1371925b3a2da95872113"
+  integrity sha512-5prQxJFybxXkI6fGffgiJgnbMmcdGWd2K5NH+yw4zF5GIZCb2PdCb9+1qr1Y+ntNJsIRvJ6hnR+NlI9vdrRL2Q==
   dependencies:
     "@polka/url" "^1.0.0-next.9"
     mime "^2.3.1"
